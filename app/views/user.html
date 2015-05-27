@@ -1,0 +1,83 @@
+<h3>Offerta formativa studenti</h3>
+<div class="panel panel-warning">
+	<div class="panel-body bg-warning">
+		<form class="form-inline">
+			<div class="form-group">
+				<label for="email">Login studente</label>
+				<input type="text" class="form-control" id="email" placeholder="Inserisci l'email dell'utente" maxlength="50" ng-model="userEmail">
+			</div>
+			<button type="button" class="btn btn-primary" ng-click="getUserData()">Ottieni dati</button>
+		</form>
+		<p>oppure puoi compilare manualmente i seguenti dati:</p>
+		<div class="form-group">
+			<label for="cds">Cds Studente</label>
+			<input type="text" class="form-control" id="cds" placeholder="Inserisci il cds dell'utente" maxlength="3" ng-model="userCds">
+		</div>
+		<div class="form-group">
+			<label for="year">Anno coorte</label>
+			<input type="text" class="form-control" id="year" placeholder="Inserisci l'anno della coorte" maxlength="4" ng-model="userYear">
+		</div>
+		<button type="button" class="btn btn-primary" ng-click="getData()">Offerta formativa</button>
+	</div>
+</div>
+<p>
+	<button type="button" class="btn btn-xs" ng-class="mode === 'w4' ? 'btn-primary' : ''" ng-click="mode = 'w4'">W4</button>  
+	<button type="button" class="btn btn-xs" ng-class="mode === 'cds' ? 'btn-primary' : ''" ng-click="mode = 'cds'">Cds</button>  
+<p>
+<hr>
+<div class="alert alert-info" role="alert" ng-show="loading"><span class="glyphicon glyphicon-refresh glyphicon-spin"></span> Carico i dati...</div>
+<div ng-show="mode === 'w4' && !loading">
+	<div ng-hide="of">
+		nessuna offerta formativa selezionata
+	</div>
+	<div ng-show="of">
+		<p><span class="label label-info">{{ of.Cds.Faculty.Key }}</span> <a href="#faculty/{{ of.Cds.Faculty.Key }}">{{ of.Cds.Faculty.Description }}</a></p>
+		<p><span class="label label-info">{{ of.Cds.CdsType.Key }}</span> {{ of.Cds.CdsType.Description }}</p>
+		<p><span class="label label-info">{{ of.Cds.Key }}</span> <a href="#cds/{{ of.Cds.Key }}">{{ of.Cds.Description }}</a></p>
+		<p><span class="label label-info">{{ of.Key}}</span> {{ of.Description }}</p>
+		<h4>Elenco attività formative</h4>
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="col-md-1">Codice W4</th>
+					<th class="col-md-11">Insegnamento</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="af in of.AFList">
+					<td class="col-md-1"><span class="label label-info">{{ af.Key }}</span></td>
+					<td class="col-md-11">
+						{{ af.Description }}
+						<ul class="list-unstyled">
+							<li ng-repeat="p in af.ProjectW4List"><span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.Project.IsPublic">non pubblico</span>  <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Project.Description }}</a> <span ng-hide="p.Project.IsPublic">(non pubblico)</span></li>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div ng-show="mode === 'cds' && !loading">
+	<div ng-hide="cds">
+		nessun cds selezionato
+	</div>
+	<div ng-show="cds">
+		<p><span class="label label-info">{{ cds.Cds.Faculty.Key }}</span> <a href="#faculty/{{ cds.Cds.Faculty.Key }}">{{ cds.Cds.Faculty.Description }}</a></p>
+		<p><span class="label label-info">{{ cds.Cds.Key }}</span> <a href="#cds/{{ cds.Cds.Key }}">{{ cds.Cds.Description }}</a></p>
+		<h4>Elenco siti Ariel</h4>
+		<table class="table">
+			<tbody>
+				<tr ng-repeat="p in cds.ProjectList">
+					<td class="col-md-9">
+						 <span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.IsPublic">non pubblico</span> <a href="http://{{ p.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Description }}</a>
+					</td>
+					<td class="col-md-3">
+						<ul class="list-inline">
+							<li ng-repeat="cds in p.CdsList"><span class="label label-info">{{ cds.Key }}</span></li>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

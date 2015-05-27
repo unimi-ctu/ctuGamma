@@ -1,0 +1,67 @@
+<ol class="breadcrumb">
+  <li><a href="#faculties">Elenco Facoltà</a></li>
+  <li><a href="#faculty/{{ cds.Cds.FacultyKey }}">Elenco Cds di {{ cds.Cds.Faculty.Description }}</a></li>
+  <li class="active">Offerte Formative</li>
+</ol>
+
+<div class="alert alert-info" role="alert" ng-show="loading"><span class="glyphicon glyphicon-refresh glyphicon-spin"></span> Carico i dati...</div>
+<div ng-hide="loading || cds.Cds">
+	<p>Il Cds con codice {{ cdsKey }} non esite</p>
+</div>
+<div ng-show="cds.Cds">
+	<h3><span class="label label-info">{{ cds.Cds.Key }}</span> {{ cds.Cds.Description }}</h3>
+	<div ng-hide="cds.Cds.IsW4">
+		<p>Questo Corso di Studi non è attivo in W4 per cui non è disponibile l'offerta formativa</p>
+		<p>È disponibile  l'<a href="#cds/{{ cds.Cds.Key }}/projects">elenco di tutti i siti Ariel</a> collegati a questo Cds</p>
+	</div>
+	<div ng-show="cds.Cds.IsW4">
+		<p>Questo Corso di Studi è attivo in W4 per cui {{ cds.OFList.length > 1 ? 'sono disponibile le offerte formative' : 'è disponibile l\'offerta formativa' }}</p>
+		<p>È disponibile anche l'<a href="#cds/{{ cds.Cds.Key }}/projects">elenco di tutti i siti Ariel</a> collegati a questo Cds</p>
+		<div class="panel panel-warning">
+			<div class="panel-body bg-warning">
+				<form>
+					<div class="form-group" style="margin-bottom: 0;">
+						<label>
+							<input type="checkbox" ng-model="isAriel"> Visualizza solo gli insegnamenti con almeno un sito Ariel
+						</label>
+					</div>
+				</form>
+			</div>
+		</div>
+		<h4>{{ cds.OFList.length > 1 ? 'Elenco offerte formative' : 'Offerta formativa' }}</h4>
+		<ul class="list-unstyled">
+			<li ng-repeat="of in cds.OFList">
+				<div class="well well-sm"><span class="label label-info">{{ of.Key }}</span> <a href="" ng-click="select(of)">{{ of.Description }}</a><a href="" ng-click="select(of)" class="pull-right"><span class="glyphicon" ng-class="selectedOf === of.Key ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'" aria-hidden="true"></span></a></div>
+				
+				<table class="table" ng-show="selectedOf == of.Key">
+					<thead>
+						<tr>
+							<th class="col-md-1">Codice W4</th>
+							<th class="col-md-11">Attività Formativa</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="af in of.AFList | filter:showAriel">
+							<td class="col-md-1"><span class="label label-info pull-right">{{ af.Key }} {{ showAriel() }}</span></td>
+							<td class="col-md-11">
+								<p>{{ af.Description }}</p>
+								<table class="table" ng-show="af.ProjectW4List.length" style="margin-bottom: 0;">
+									<tbody>
+										<tr ng-repeat="p in af.ProjectW4List">
+											<td>
+												<span class="glyphicon glyphicon-education"></span>  <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Project.Description }}</a> <span ng-hide="p.Project.IsPublic">(non pubblico)</span>
+												<ul class="list-inline" style="padding-left: 2em;">
+													<li ng-repeat="owner in p.Project.OwnerList"><small><span class="glyphicon glyphicon-user"></span> <a href="#teacher/{{ owner.UserId }}">{{ owner.FirstName + ' ' + owner.LastName }}</a></small></li>
+												</ul>
+											</td>
+										</tr>
+									</tbody>
+								</ul>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</li>
+		</ul>
+	</div>
+</div>

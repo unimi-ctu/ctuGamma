@@ -1,0 +1,9 @@
+<h3>Elenco facoltà</h3>
+<table class="table">
+	<tbody>
+		<tr ng-repeat="f in faculties">
+			<td class="col-md-1"><h4><span class="label label-info pull-right">{{ f.Key }}</span></h4></td>
+			<td class="col-md-11"><h4><a href="#faculty/{{ f.Key }}">{{ f.Description }}</a></h4></td>
+		</tr>
+	</tbody>
+</table>

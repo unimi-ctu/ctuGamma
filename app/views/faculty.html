@@ -1,0 +1,29 @@
+<ol class="breadcrumb">
+  <li><a href="#faculties">Facoltà</a></li>
+  <li class="active">Elenco Cds</li>
+</ol>
+<h3><span class="label label-info">{{ faculty.Faculty.Key }}</span> {{ faculty.Faculty.Description }}</h3>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<form>
+			<div class="form-group">
+				<label>
+					<input type="checkbox" ng-model="isW4"> W4 mode
+				</label>
+			</div>
+		</form>
+	</div>
+</div>
+<ul>
+	<li ng-repeat="cdsType in faculty.CdsTypeList | filter:onlyw4">
+		<p><span class="label label-info">{{ cdsType.CdsType.Key }}</span> <strong>{{ cdsType.CdsType.Description }}</strong></p>
+		<ul>
+			<li ng-repeat="cds in cdsType.CdsList">
+				<span class="label label-info">{{ cds.Key }}</span> 
+				<a href="#cds/{{ cds.Key }}/projects"><span class="label label-warning">L</span></a>
+				<a href="#cds/{{ cds.Key }}"><span ng-show="cds.IsW4" class="label label-primary">W4</span></a> 
+				{{ cds.Description }}
+			</li>
+		</ul>
+	</li>
+</ul>

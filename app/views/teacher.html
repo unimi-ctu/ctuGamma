@@ -1,0 +1,26 @@
+<h3>{{ teacher.Teacher.FirstName + ' ' + teacher.Teacher.LastName }}</h3>
+<h4>Elenco siti ariel:</h4>
+<table class="table">
+	<tbody>
+		<tr ng-repeat="p in teacher.ProjectList">
+			<td>
+				<a href="#">{{ p.Project.Description }}</a>
+				<ul>
+					<li ng-repeat="af in p.AFList">
+						<span class="badge">{{ af.Key }}</span> {{ af.Description }}
+						<ul>
+							<li ng-repeat="of in af.OFBaseList">
+								<span class="badge">{{ of.Key }}</span>
+								<span class="badge">{{ of.Cds.Key }}</span>
+								<span class="badge">{{ of.Cds.Faculty.Key }}</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</td>
+			<td>
+				<a href="#">Scheda</a>
+			</td>
+		<tr>
+	</tbody>
+</table>
