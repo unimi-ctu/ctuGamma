@@ -1,26 +1,18 @@
-<h3>{{ teacher.Teacher.FirstName + ' ' + teacher.Teacher.LastName }}</h3>
+<h3><td><span class="glyphicon glyphicon-user"></span> {{ teacher.Teacher.FirstName + ' ' + teacher.Teacher.LastName }}</h3>
+<p>Sono elencati i siti Ariel del docente selezionato</p>
 <h4>Elenco siti ariel:</h4>
 <table class="table">
 	<tbody>
 		<tr ng-repeat="p in teacher.ProjectList">
 			<td>
-				<a href="#">{{ p.Project.Description }}</a>
-				<ul>
+				<span class="glyphicon glyphicon-education"></span>  <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Project.Description }}</a>
+				<a href="#" class="pull-right">Scheda</a>
+				<ul class="list-unstyled" style="padding-left: 2em;">
 					<li ng-repeat="af in p.AFList">
-						<span class="badge">{{ af.Key }}</span> {{ af.Description }}
-						<ul>
-							<li ng-repeat="of in af.OFBaseList">
-								<span class="badge">{{ of.Key }}</span>
-								<span class="badge">{{ of.Cds.Key }}</span>
-								<span class="badge">{{ of.Cds.Faculty.Key }}</span>
-							</li>
-						</ul>
+						<span class="label label-info">{{ af.Key }}</span> {{ af.Description }}
 					</li>
 				</ul>
 			</td>
-			<td>
-				<a href="#">Scheda</a>
-			</td>
-		<tr>
+		</tr>
 	</tbody>
 </table>

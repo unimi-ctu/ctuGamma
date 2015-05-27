@@ -1,4 +1,6 @@
 <h3>Offerta formativa studenti</h3>
+<p>In questa pagina è possibile simulare la visualizzazione delle informazioni che vede uno studente che è iscritto ad un Cds nella Coorte specificata</p>
+<p>È anche possibile recuperar equesti dati partendo dall'email di login dello studente</p>
 <div class="panel panel-warning">
 	<div class="panel-body bg-warning">
 		<form class="form-inline">
@@ -31,10 +33,12 @@
 		nessuna offerta formativa selezionata
 	</div>
 	<div ng-show="of">
-		<p><span class="label label-info">{{ of.Cds.Faculty.Key }}</span> <a href="#faculty/{{ of.Cds.Faculty.Key }}">{{ of.Cds.Faculty.Description }}</a></p>
-		<p><span class="label label-info">{{ of.Cds.CdsType.Key }}</span> {{ of.Cds.CdsType.Description }}</p>
-		<p><span class="label label-info">{{ of.Cds.Key }}</span> <a href="#cds/{{ of.Cds.Key }}">{{ of.Cds.Description }}</a></p>
-		<p><span class="label label-info">{{ of.Key}}</span> {{ of.Description }}</p>
+		<div class="well well.xs">
+			<p><span class="label label-info">{{ of.Cds.Faculty.Key }}</span> <a href="#faculty/{{ of.Cds.Faculty.Key }}">{{ of.Cds.Faculty.Description }}</a></p>
+			<p><span class="label label-info">{{ of.Cds.CdsType.Key }}</span> {{ of.Cds.CdsType.Description }}</p>
+			<p><span class="label label-info">{{ of.Cds.Key }}</span> <a href="#cds/{{ of.Cds.Key }}">{{ of.Cds.Description }}</a></p>
+			<p><span class="label label-info">{{ of.Key}}</span> {{ of.Description }}</p>
+		</div>
 		<h4>Elenco attività formative</h4>
 		<table class="table">
 			<thead>
