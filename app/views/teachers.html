@@ -1,0 +1,30 @@
+<h3>Elenco docenti</h3>
+<p>In questa pagina sono elencati i docenti che sono collegati ad un sito Ariel pubblico</p>
+<div class="panel panel-warning">
+	<div class="panel-body bg-warning">
+		<form class="form-inline">
+			<div class="form-group">
+				<label for="email">Ricerca</label>
+				<input type="text" class="form-control" id="email" placeholder="cognome del docente" maxlength="50" ng-model="keyword">
+			</div>
+		</form>
+	</div>
+</div>
+<table class="table">
+	<tbody>
+		<tr ng-repeat="letter in teacherList">
+			<td class="col-md-2">
+				<h3 class="pull-right"><span class="label label-info text-uppercase">{{ letter.key }}</span></h3>
+			</td>
+			<td class="col-md-10">
+				<table class="table">
+					<tbody>
+						<tr ng-repeat="t in letter.tlist | filter:getTeachers | limitTo:5">
+							<td><span class="glyphicon glyphicon-user"></span> <a href="#teacher/{{ t.UserId }}">{{ t.FirstName + ' ' + t.LastName }}</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
