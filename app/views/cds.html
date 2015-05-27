@@ -36,20 +36,20 @@
 				<table class="table" ng-show="selectedOf == of.Key">
 					<thead>
 						<tr>
-							<th class="col-md-1">Codice W4</th>
+							<th class="col-md-1"><span class="pull-right">Codice W4</span></th>
 							<th class="col-md-11">Attività Formativa</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="af in of.AFList | filter:showAriel">
-							<td class="col-md-1"><span class="label label-info pull-right">{{ af.Key }} {{ showAriel() }}</span></td>
+							<td class="col-md-1"><span class="label label-info pull-right">{{ af.Key }}</span></td>
 							<td class="col-md-11">
 								<p>{{ af.Description }}</p>
 								<table class="table" ng-show="af.ProjectW4List.length" style="margin-bottom: 0;">
 									<tbody>
 										<tr ng-repeat="p in af.ProjectW4List">
 											<td>
-												<span class="glyphicon glyphicon-education"></span>  <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Project.Description }}</a> <span ng-hide="p.Project.IsPublic">(non pubblico)</span>
+												<span class="glyphicon glyphicon-education"></span> <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Project.Description }}</a> <span ng-hide="p.Project.IsPublic">(non pubblico)</span>
 												<ul class="list-inline" style="padding-left: 2em;">
 													<li ng-repeat="owner in p.Project.OwnerList"><small><span class="glyphicon glyphicon-user"></span> <a href="#teacher/{{ owner.UserId }}">{{ owner.FirstName + ' ' + owner.LastName }}</a></small></li>
 												</ul>

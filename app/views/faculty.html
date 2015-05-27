@@ -3,10 +3,12 @@
   <li class="active">Elenco Cds</li>
 </ol>
 <h3><span class="label label-info">{{ faculty.Faculty.Key }}</span> {{ faculty.Faculty.Description }}</h3>
-<div class="panel panel-default">
-	<div class="panel-body">
+<p>In questa pagina sono elencati i Cds afferenti alla facoltà selezionata</p>
+<p>Inizialmente sono visualizzati solo i Cds che contengono almeno un'Offerta Formativa attiva per l'anno in corso: disabilitando il flag "W4 mode" è possibile visualizzare l'elenco completo dei Cds di questa facoltà<p>
+<div class="panel panel-warning">
+	<div class="panel-body bg-warning">
 		<form>
-			<div class="form-group">
+			<div class="form-group" style="margin-bottom: 0;">
 				<label>
 					<input type="checkbox" ng-model="isW4"> W4 mode
 				</label>
@@ -14,16 +16,23 @@
 		</form>
 	</div>
 </div>
-<ul>
+
+<h4>Elenco Corsi di Studi</h4>
+<p class="clearfix"><span class="pull-right"><span class="label label-warning">A</span> Elenco siti Ariel <span class="label label-primary">W4</span> Elenco offerte formative attive</span></p>
+<ul class="list-unstyled">
 	<li ng-repeat="cdsType in faculty.CdsTypeList | filter:onlyw4">
-		<p><span class="label label-info">{{ cdsType.CdsType.Key }}</span> <strong>{{ cdsType.CdsType.Description }}</strong></p>
-		<ul>
-			<li ng-repeat="cds in cdsType.CdsList">
-				<span class="label label-info">{{ cds.Key }}</span> 
-				<a href="#cds/{{ cds.Key }}/projects"><span class="label label-warning">L</span></a>
-				<a href="#cds/{{ cds.Key }}"><span ng-show="cds.IsW4" class="label label-primary">W4</span></a> 
-				{{ cds.Description }}
-			</li>
-		</ul>
+		<div class="well well-sm"><span class="label label-info" ng-hide="cdsType.CdsType.Key === 'NOCLASS'">{{ cdsType.CdsType.Key }}</span> <strong>{{ cdsType.CdsType.Description }}</strong></div>
+		<table class="table">
+			<tbody>
+				<tr ng-repeat="cds in cdsType.CdsList">
+					<td class="col-md-1"><div class="pull-right"><span class="label label-info">{{ cds.Key }}</span></div></td>
+					<td class="col-md-10">{{ cds.Description }}</td>
+					<td class="col-md-1">
+						<a href="#cds/{{ cds.Key }}/projects"><span class="label label-warning">A</span></a>
+						<a href="#cds/{{ cds.Key }}"><span ng-show="cds.IsW4" class="label label-primary">W4</span></a> 
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</li>
 </ul>
