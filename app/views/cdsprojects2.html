@@ -1,0 +1,38 @@
+<ol class="breadcrumb">
+  <li><a href="#faculties">Elenco Facoltà</a></li>
+  <li ng-show="cds.Cds"><a href="#faculty/{{ ::cds.Cds.Faculty.Key }}" ng-bind="cds.Cds.Faculty.Description"></a></li>
+  <li class="active">Cds</li>
+</ol>
+<h3>Elenco siti collegati al cds</h3>
+<p>I siti Ariel sono collegati a uno o più Cds. In questa pagina sono elencati tutti i siti Ariel che hanno un collegamento con il Cds selezionato</p>
+<div class="panel panel-warning">
+	<div class="panel-body bg-warning">
+		<form class="form-inline">
+			<div class="form-group">
+				<label for="email">Codice Cds</label>
+				<input type="text" class="form-control" id="email" placeholder="Inserisci il codice cds" maxlength="3" ng-model="cdsKey">
+			</div>
+			<button type="button" class="btn btn-primary" ng-click="getCdsData()">Ottieni dati</button>
+		</form>
+	</div>
+</div>
+<div class="well well-xs"><span class="label label-info" ng-bind="cds.Cds.Key"></span> <a ng-show="cds.Cds.IsW4" href="#cds/{{ ::cds.Cds.Key }}"><span class="label label-primary">W4</span></a> {{ cds.Cds.Description }}</div>
+<div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
+<table class="table">
+	<tbody>
+		<tr ng-repeat="p in cds.ProjectList | limitTo: limit">
+			<td class="col-md-8">
+				 <span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.IsPublic">non pubblico</span> <a href="http://{{ ::p.Project.Url }}.ariel.ctu.unimi.it" target="_blank" ng-bind="p.Description"></a>
+				<ul class="list-inline" style="padding-left: 2em;">
+					<li ng-repeat="owner in p.OwnerList"><small><span class="glyphicon glyphicon-user"></span> <a ng-href="#teacher/{{ ::owner.UserId }}" ng-bind="owner.FirstName + ' ' + owner.LastName"></a></small></li>
+				</ul>
+			</td>
+			<td class="col-md-4">
+				<ul class="list-inline">
+					<li ng-repeat="cds in p.CdsList"><a ng-href="#cds/{{ ::cds.Key }}{{ ::cds.IsW4 ? '' : '/projects' }}"><span class="label" ng-class="cds.IsW4 ? 'label-primary' : 'label-info'" ng-bind="cds.Key"></span></a></li>
+				</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>

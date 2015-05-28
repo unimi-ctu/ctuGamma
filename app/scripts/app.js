@@ -14,7 +14,8 @@ angular
     'ngCookies',
     'ngResource',
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
+	'infinite-scroll'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -51,7 +52,7 @@ angular
         controller: 'TeacherCtrl'
       })
       .when('/cds/:cdsKey/projects', {
-        templateUrl: 'views/cdsprojects.html',
+        templateUrl: 'views/cdsprojects2.html',
         controller: 'CdsprojectsCtrl'
       })
       .when('/teachers', {
