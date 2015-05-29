@@ -3,7 +3,7 @@
 	<tbody>
 		<tr ng-repeat="f in faculties">
 			<td class="col-md-1"><h4><span class="label label-info pull-right">{{ f.Key }}</span></h4></td>
-			<td class="col-md-11"><h4><a href="#faculty/{{ f.Key }}">{{ f.Description }}</a> <small> / 87 siti ariel</small></h4></td>
+			<td class="col-md-11"><h4><a href="#faculty/{{ ::f.Key }}">{{ ::f.Description }}</a> <small> / {{ ::f.ProjectCount }} siti ariel</small></h4></td>
 		</tr>
 	</tbody>
 </table>
