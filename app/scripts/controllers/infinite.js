@@ -1,3 +1,5 @@
+'use strict';
+
 /* ng-infinite-scroll - v1.0.0 - 2013-02-23 */
 var mod;
 
@@ -10,14 +12,15 @@ mod.directive('infiniteScroll', [
         var checkWhenEnabled, handler, scrollDistance, scrollEnabled;
         $window = angular.element($window);
         scrollDistance = 0;
-        if (attrs.infiniteScrollDistance != null) {
+        if (attrs.infiniteScrollDistance !== null) {
           scope.$watch(attrs.infiniteScrollDistance, function(value) {
-            return scrollDistance = parseInt(value, 10);
+			scrollDistance = parseInt(value, 10);
+            return scrollDistance;
           });
         }
         scrollEnabled = true;
         checkWhenEnabled = false;
-        if (attrs.infiniteScrollDisabled != null) {
+        if (attrs.infiniteScrollDisabled !== null) {
           scope.$watch(attrs.infiniteScrollDisabled, function(value) {
             scrollEnabled = !value;
             if (scrollEnabled && checkWhenEnabled) {
@@ -39,14 +42,15 @@ mod.directive('infiniteScroll', [
               return scope.$apply(attrs.infiniteScroll);
             }
           } else if (shouldScroll) {
-            return checkWhenEnabled = true;
+			checkWhenEnabled = true;
+            return checkWhenEnabled;
           }
         };
         $window.on('scroll', handler);
         scope.$on('$destroy', function() {
           return $window.off('scroll', handler);
         });
-        return $timeout((function() {
+        return $timeout(function() {
           if (attrs.infiniteScrollImmediateCheck) {
             if (scope.$eval(attrs.infiniteScrollImmediateCheck)) {
               return handler();
@@ -54,7 +58,7 @@ mod.directive('infiniteScroll', [
           } else {
             return handler();
           }
-        }), 0);
+        }, 0);
       }
     };
   }

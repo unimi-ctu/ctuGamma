@@ -12,10 +12,10 @@ angular.module('unimiAppApp')
 	  $scope.cdsKey = $routeParams.cdsKey === 'nokey' ? null : $routeParams.cdsKey;
 	  
 	  $scope.loadMore = function() {
-		  if ($scope.limit < $scope.cds.ProjectList.length) {
+		  if ($scope.cds && $scope.limit < $scope.cds.ProjectList.length) {
 			$scope.limit += 10;
 		  }
-	  }
+	  };
 	  
 	  $scope.getCdsData = function() {
 		  $scope.limit = 20;
@@ -25,8 +25,9 @@ angular.module('unimiAppApp')
 			  $scope.cds = null;
 		  });
 
-	  }
+	  };
 	  
-	  if ($scope.cdsKey)
+	  if ($scope.cdsKey) {
 		$scope.getCdsData();
+	  }
   });

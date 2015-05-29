@@ -9,7 +9,7 @@
 	<p>Il Cds con codice {{ cdsKey }} non esite</p>
 </div>
 <div ng-show="cds.Cds">
-	<h3><span class="label label-info">{{ cds.Cds.Key }}</span> {{ cds.Cds.Description }}</h3>
+	<h3><span class="label label-info">{{ ::cds.Cds.Key }}</span> <span ng-if="cds.Cds.Year < 2015" class="label label-danger">{{ ::cds.Cds.Year }}</span> {{ ::cds.Cds.Description }}</h3>
 	<div ng-hide="cds.Cds.IsW4">
 		<p>Questo Corso di Studi non è attivo in W4 per cui non è disponibile l'offerta formativa</p>
 		<p>È disponibile  l'<a href="#cds/{{ cds.Cds.Key }}/projects">elenco di tutti i siti Ariel</a> collegati a questo Cds</p>
@@ -22,6 +22,11 @@
 				<form>
 					<div class="form-group" style="margin-bottom: 0;">
 						<label>
+							<input type="checkbox" ng-model="isActive"> Visualizza solo le offerte formative attive
+						</label>
+					</div>
+					<div class="form-group" style="margin-bottom: 0;">
+						<label>
 							<input type="checkbox" ng-model="isAriel"> Visualizza solo gli insegnamenti con almeno un sito Ariel
 						</label>
 					</div>
@@ -30,8 +35,8 @@
 		</div>
 		<h4>{{ cds.OFList.length > 1 ? 'Elenco offerte formative' : 'Offerta formativa' }}</h4>
 		<ul class="list-unstyled">
-			<li ng-repeat="of in cds.OFList">
-				<div class="well well-sm"><span class="label label-info">{{ of.Key }}</span> <a href="" ng-click="select(of)">{{ of.Description }}</a><a href="" ng-click="select(of)" class="pull-right"><span class="glyphicon" ng-class="selectedOf === of.Key ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'" aria-hidden="true"></span></a></div>
+			<li ng-repeat="of in cds.OFList | filter:showActive">
+				<div class="well well-sm"><span class="label label-info">{{ of.Key }}</span> <span ng-if="of.Year < 2015" class="label label-danger">{{ of.Year }}</span> <a href="" ng-click="select(of)">{{ of.Description }}</a><a href="" ng-click="select(of)" class="pull-right"><span class="glyphicon" ng-class="selectedOf === of.Key ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom'" aria-hidden="true"></span></a></div>
 				
 				<table class="table" ng-show="selectedOf == of.Key">
 					<thead>

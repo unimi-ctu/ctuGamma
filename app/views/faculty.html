@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
   <li><a href="#faculties">Facoltà</a></li>
-  <li class="active">Elenco Cds</li>
+  <li class="active">Elenco Cds</li> 
 </ol>
 <h3><span class="label label-info">{{ faculty.Faculty.Key }}</span> {{ faculty.Faculty.Description }}</h3>
 <p>In questa pagina sono elencati i Cds afferenti alla facoltà selezionata</p>
@@ -8,6 +8,11 @@
 <div class="panel panel-warning">
 	<div class="panel-body bg-warning">
 		<form>
+			<div class="form-group" style="margin-bottom: 0;">
+				<label>
+					<input type="checkbox" ng-model="isActive"> Visualizza solo Corsi di Studi attivi
+				</label>
+			</div>
 			<div class="form-group" style="margin-bottom: 0;">
 				<label>
 					<input type="checkbox" ng-model="isW4"> W4 mode
@@ -24,8 +29,8 @@
 		<div class="well well-sm"><span class="label label-info" ng-hide="cdsType.CdsType.Key === 'NOCLASS'">{{ cdsType.CdsType.Key }}</span> <strong>{{ cdsType.CdsType.Description }}</strong></div>
 		<table class="table">
 			<tbody>
-				<tr ng-repeat="cds in cdsType.CdsList">
-					<td class="col-md-1"><div class="pull-right"><span class="label label-info">{{ cds.Key }}</span></div></td>
+				<tr ng-repeat="cds in cdsType.CdsList | filter:showActive">
+					<td class="col-md-1"><span class="label label-info">{{ cds.Key }}</span> <span ng-if="cds.Year < 2015" class="label label-danger">{{ cds.Year }}</span></td>
 					<td class="col-md-10">{{ cds.Description }}</td>
 					<td class="col-md-1">
 						<a href="#cds/{{ cds.Key }}/projects"><span class="label label-warning">A</span></a>

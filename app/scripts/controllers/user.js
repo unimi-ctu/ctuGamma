@@ -33,10 +33,7 @@ angular.module('unimiAppApp')
 					}
 				}).then(function() { $scope.loading = false; });
 			}
-
-
-			
-	  }
+	  };
 	  
 	  $scope.getUserData = function() {
 		  var email = ($scope.userEmail || 'nouser').replace(/^\s+|\s+$/gm,'').replace(/\./g, '_');
@@ -49,8 +46,8 @@ angular.module('unimiAppApp')
 				
 				$scope.getOf();
 			  }
-		  }).error(function(data) {
+		  }).error(function() {
 			  console.log('404');
 		  });
-	  }
+	  };
   });
