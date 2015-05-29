@@ -59,7 +59,21 @@ angular
         templateUrl: 'views/teachers.html',
         controller: 'TeachersCtrl'
       })
+      .when('/quicksearch/:keywords', {
+        templateUrl: 'views/quicksearch.html',
+        controller: 'QuicksearchCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .run(function($rootScope, $location) {
+	  $rootScope.goSearch = function() {
+		  var keywords = $rootScope.keywords || '';
+		  keywords = keywords.trim();
+		  if (keywords) {
+			  console.log('/quicksearch/' + keywords);
+			$location.path('/quicksearch/' + keywords);
+		  }
+	  };
   });

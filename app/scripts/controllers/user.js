@@ -36,6 +36,9 @@ angular.module('unimiAppApp')
 	  };
 	  
 	  $scope.getUserData = function() {
+		$scope.userCds = '';
+		$scope.userYear = '';
+		  
 		  var email = ($scope.userEmail || 'nouser').replace(/^\s+|\s+$/gm,'').replace(/\./g, '_');
 		  email = email.indexOf('@') < 0 ? email + '@studenti_unimi_it' : email;
 		  $http.get('http://192.168.15.13/unimiRest/unimi/userdata/' + email).success(function(data) {
