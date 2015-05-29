@@ -16,5 +16,12 @@ angular.module('unimiAppApp')
 	  
 		$scope.onlyw4 = function(item) {
 			return !$scope.isW4 || (item.CdsType && item.CdsType.Key !== 'NOCLASS');
-		}
+		};
+		
+		$scope.isActive = true;
+		$scope.showActive = function(item) {
+			
+			return !item || !$scope.isActive || item.Year === '2015';
+		};
+
 	});

@@ -8,6 +8,6 @@
  * Controller of the unimiAppApp
  */
 angular.module('unimiAppApp')
-  .controller('CdsesCtrl', function ($scope, $routeParams) {
-		var x = $routeParams.fKey;
+  .controller('CdsesCtrl', function () {
+		//var x = $routeParams.fKey;
   });

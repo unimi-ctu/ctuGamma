@@ -17,18 +17,24 @@ angular.module('unimiAppApp')
 	  $http.get('http://192.168.15.13/unimiRest/unimi/cds/' + $scope.cdsKey + '/ofs').success(function(data) {
 		$scope.cds = data;
 		
-		if (data.OFList.length == 1) {
+		if (data.OFList.length === 1) {
 			$scope.selectedOf = data.OFList[0].Key;
 		}
-	  }).then(function() { $scope.loading = false });
+	  }).then(function() { $scope.loading = false; });
 	  
 	  $scope.select = function(of) {
-		$scope.selectedOf = $scope.selectedOf == of.Key ? null : of.Key;
+		$scope.selectedOf = $scope.selectedOf === of.Key ? null : of.Key;
 	  };
 	  
 	  $scope.isAriel = true;
 	  $scope.showAriel = function(item) {
 		  
 		  return !item || !$scope.isAriel || item.ProjectW4List.length;
+	  };
+
+	  $scope.isActive = true;
+	  $scope.showActive = function(item) {
+		  
+		  return !item || !$scope.isActive || item.Year === '2015';
 	  };
   });

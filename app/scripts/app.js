@@ -14,7 +14,8 @@ angular
     'ngCookies',
     'ngResource',
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
+	'infinite-scroll'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -51,14 +52,28 @@ angular
         controller: 'TeacherCtrl'
       })
       .when('/cds/:cdsKey/projects', {
-        templateUrl: 'views/cdsprojects.html',
+        templateUrl: 'views/cdsprojects2.html',
         controller: 'CdsprojectsCtrl'
       })
       .when('/teachers', {
         templateUrl: 'views/teachers.html',
         controller: 'TeachersCtrl'
       })
+      .when('/quicksearch/:keywords', {
+        templateUrl: 'views/quicksearch.html',
+        controller: 'QuicksearchCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .run(function($rootScope, $location) {
+	  $rootScope.goSearch = function() {
+		  var keywords = $rootScope.keywords || '';
+		  keywords = keywords.trim();
+		  if (keywords) {
+			  console.log('/quicksearch/' + keywords);
+			$location.path('/quicksearch/' + keywords);
+		  }
+	  };
   });

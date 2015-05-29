@@ -1,0 +1,38 @@
+<h3><span class="glyphicon glyphicon-search"></span>  Risultati ricerca</h3>
+<p>La ricerca, per ora, cerca nell'elenco di tutti i siti Ariel, di tutti i docenti collegati e nell'elenco dei Corsi di Studi</p>
+<p>Ritorna un massimo di 20 elementi per ognuna lista</p>
+<div ng-if="results.ProjectList.length">
+	<hr>
+	<h4>Elenco siti <small>/ {{ results.ProjectList.length }} siti trovati</small></h4>
+	<table class="table">
+		<tbody>
+			<tr ng-repeat="p in results.ProjectList">
+				<td><span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.IsPublic">non pubblico</span> <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Description }}</a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div ng-if="results.TeacherList.length">
+	<hr>
+	<h4>Elenco Docenti <small>/ {{ results.TeacherList.length }} docenti trovati</small></h4>
+	<p>Elenco dei "docenti di siti Ariel" il cui cognome contiene la parola chiave ricercata</p>
+	<table class="table">
+		<tbody>
+			<tr ng-repeat="t in results.TeacherList">
+				<td><span class="glyphicon glyphicon-user"></span> <a href="#teacher/{{ t.UserId }}">{{ t.FirstName + ' ' + t.LastName }}</a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div ng-if="results.CdsList.length">
+	<hr>
+	<h4>Elenco Corsi di Studio <small>/ {{ results.CdsList.length }} cds trovati</small></h4>
+	<table class="table">
+		<tbody>
+			<tr ng-repeat="c in results.CdsList">
+				<td><a href="#cds/{{ c.Key }}{{ c.IsW4 ? '' : '/projects' }}"><span class="label" ng-class="c.IsW4 ? 'label-primary' : 'label-info'">{{ c.Key }}</span></a></td>
+				<td>{{ c.Description }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

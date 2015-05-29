@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
   <li><a href="#faculties">Elenco Facoltà</a></li>
-  <li><a href="#faculty/{{ cds.Cds.Faculty.Key }}">{{ cds.Cds.Faculty.Description }}</a></li>
+  <li ng-show="cds.Cds"><a href="#faculty/{{ cds.Cds.Faculty.Key }}">{{ cds.Cds.Faculty.Description }}</a></li>
   <li class="active">Cds</li>
 </ol>
 <h3>Elenco siti collegati al cds</h3>
@@ -28,7 +28,7 @@
 			</td>
 			<td class="col-md-4">
 				<ul class="list-inline">
-					<li ng-repeat="cds in p.CdsList"><a href="#cds/{{ cds.Key }}{{ cds.IsW4 ? '' : '/projects' }}"<span class="label" ng-class="cds.IsW4 ? 'label-primary' : 'label-info'">{{ cds.Key }}</span></a></li>
+					<li ng-repeat="cds in p.CdsList"><a href="#cds/{{ cds.Key }}{{ cds.IsW4 ? '' : '/projects' }}"><span class="label" ng-class="cds.IsW4 ? 'label-primary' : 'label-info'">{{ cds.Key }}</span></a></li>
 				</ul>
 			</td>
 		</tr>
