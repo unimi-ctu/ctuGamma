@@ -66,8 +66,10 @@
 		nessun cds selezionato
 	</div>
 	<div ng-show="cds">
-		<p><span class="label label-info">{{ cds.Cds.Faculty.Key }}</span> <a href="#faculty/{{ cds.Cds.Faculty.Key }}">{{ cds.Cds.Faculty.Description }}</a></p>
-		<p><span class="label label-info">{{ cds.Cds.Key }}</span> <a href="#cds/{{ cds.Cds.Key }}">{{ cds.Cds.Description }}</a></p>
+		<div class="well well.xs">
+			<p><span class="label label-info">{{ cds.Cds.Faculty.Key }}</span> <a href="#faculty/{{ cds.Cds.Faculty.Key }}">{{ cds.Cds.Faculty.Description }}</a></p>
+			<p><span class="label label-info">{{ cds.Cds.Key }}</span> <a href="#cds/{{ cds.Cds.Key }}">{{ cds.Cds.Description }}</a></p>
+		</div>
 		<h4>Elenco siti Ariel</h4>
 		<table class="table">
 			<tbody>
