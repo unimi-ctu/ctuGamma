@@ -2,37 +2,92 @@
 <p>La ricerca, per ora, cerca nell'elenco di tutti i siti Ariel, di tutti i docenti collegati e nell'elenco dei Corsi di Studi</p>
 <p>Ritorna un massimo di 20 elementi per ognuna lista</p>
 <div ng-if="results.ProjectList.length">
-	<hr>
-	<h4>Elenco siti <small>/ {{ results.ProjectList.length }} siti trovati</small></h4>
-	<table class="table">
-		<tbody>
-			<tr ng-repeat="p in results.ProjectList">
-				<td><span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.IsPublic">non pubblico</span> <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Description }}</a></td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="clearfix well well-sm">
+		<h4 class="pull-left">Elenco siti <small>/ {{ ::results.ProjectList.length }} {{ ::results.ProjectList.length == 1 ? 'sito trovato' : 'siti trovati' }}</small></h4>
+		<span class="pull-right"><a style="position:relative; top: 15px; bottom: 15px;" ng-click="isPClosed = !isPClosed"><span class="glyphicon glyphicon-triangle-bottom" ng-class="isPClosed ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></a></span>
+	</div>
+	<div ng-hide="isPClosed" style="margin-bottom: 1em;">
+		<table class="table">
+			<tbody>
+				<tr ng-repeat="p in results.ProjectList | limitTo: limits['pmax']">
+					<td>
+						<span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.IsPublic">non pubblico</span> <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Description }}</a>
+						<ul class="list-inline" style="padding-left: 2em;">
+							<li ng-repeat="owner in p.OwnerList"><small><span class="glyphicon glyphicon-user"></span> <a href="#teacher/{{ owner.UserId }}">{{ owner.FirstName + ' ' + owner.LastName }}</a></small></li>
+						</ul>				
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p><a href="" ng-click="limits['pmax'] = null" ng-if="limits['pmax'] && results.ProjectList.length > limits['pmax']"><span class="glyphicon glyphicon-plus-sign"></span> Visualizza altri...</a></p>
+	</div>
 </div>
 <div ng-if="results.TeacherList.length">
-	<hr>
-	<h4>Elenco Docenti <small>/ {{ results.TeacherList.length }} docenti trovati</small></h4>
-	<p>Elenco dei "docenti di siti Ariel" il cui cognome contiene la parola chiave ricercata</p>
-	<table class="table">
-		<tbody>
-			<tr ng-repeat="t in results.TeacherList">
-				<td><span class="glyphicon glyphicon-user"></span> <a href="#teacher/{{ t.UserId }}">{{ t.FirstName + ' ' + t.LastName }}</a></td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="clearfix well well-sm">
+		<h4 class="pull-left">Elenco Docenti <small>/ {{ results.TeacherList.length }} {{ ::results.TeacherList.length == 1 ? 'docente trovato' : 'docenti trovati' }}</small></h4>
+		<span class="pull-right"><a style="position:relative; top: 15px; bottom: 15px;" ng-click="isTClosed = !isTClosed"><span class="glyphicon glyphicon-triangle-bottom" ng-class="isTClosed ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></a></span>
+	</div>
+	<div ng-hide="isTClosed" style="margin-bottom: 1em;">
+		<p>Elenco dei "docenti di siti Ariel" il cui cognome contiene la parola chiave ricercata</p>
+		<table class="table">
+			<tbody>
+				<tr ng-repeat="t in results.TeacherList | limitTo: limits['tmax']">
+					<td><span class="glyphicon glyphicon-user"></span> <a href="#teacher/{{ t.UserId }}">{{ t.FirstName + ' ' + t.LastName }}</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<p><a href="" ng-click="limits['tmax'] = null" ng-if="limits['tmax'] && results.TeacherList.length > limits['tmax']"><span class="glyphicon glyphicon-plus-sign"></span> Visualizza altri...</a></p>
+	</div>
 </div>
 <div ng-if="results.CdsList.length">
-	<hr>
-	<h4>Elenco Corsi di Studio <small>/ {{ results.CdsList.length }} cds trovati</small></h4>
-	<table class="table">
-		<tbody>
-			<tr ng-repeat="c in results.CdsList">
-				<td><a href="#cds/{{ c.Key }}{{ c.IsW4 ? '' : '/projects' }}"><span class="label" ng-class="c.IsW4 ? 'label-primary' : 'label-info'">{{ c.Key }}</span></a></td>
-				<td>{{ c.Description }}</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="clearfix well well-sm">
+		<h4 class="pull-left">Elenco Corsi di Studio <small>/ {{ results.CdsList.length }} {{ ::results.CdsList.length == 1 ? 'cds trovato' : 'cds trovati' }}cds trovati</small></h4>
+		<span class="pull-right"><a style="position:relative; top: 15px; bottom: 15px;" ng-click="isCdsClosed = !isCdsClosed"><span class="glyphicon glyphicon-triangle-bottom" ng-class="isCdsClosed ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></a></span>
+	</div>
+	<div ng-hide="isCdsClosed" style="margin-bottom: 1em;">
+		<table class="table">
+			<tbody>
+				<tr ng-repeat="c in results.CdsList | limitTo: limits['cdsmax']">
+					<td><a href="#cds/{{ c.Key }}{{ c.IsW4 ? '' : '/projects' }}"><span class="label" ng-class="c.IsW4 ? 'label-primary' : 'label-info'">{{ c.Key }}</span></a></td>
+					<td>{{ c.Description }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<p><a href="" ng-click="limits['cdsmax'] = null" ng-if="limits['cdsmax'] && results.CdsList.length > limits['cdsmax']"><span class="glyphicon glyphicon-plus-sign"></span> Visualizza altri...</a></p>
+	</div>
+</div>
+<div ng-if="results.AFList.length">
+	<div class="clearfix well well-sm">
+		<h4 class="pull-left">Elenco Attività Formative <small>/ {{ results.AFList.length }} {{ ::results.AFList.length == 1 ? 'attività trovata' : 'attività trovate' }}</small></h4>
+		<span class="pull-right"><a style="position:relative; top: 15px; bottom: 15px;" ng-click="isAFClosed = !isAFClosed"><span class="glyphicon glyphicon-triangle-bottom" ng-class="isAFClosed ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></a></span>
+	</div>
+	<div ng-hide="isAFClosed" style="margin-bottom: 1em;">
+		<table class="table">
+			<tbody>
+				<tr ng-repeat="af in results.AFList | limitTo: limits['afmax']">
+					<td><span class="label" ng-class="af.IsW4 ? 'label-primary' : 'label-info'">{{ af.Key }}</span></a></td>
+					<td>
+						<p>{{ af.Description }}</p>
+						<table class="table" ng-show="af.ProjectW4List.length" style="margin-bottom: 0;">
+							<tbody>
+								<tr ng-repeat="p in af.ProjectW4List">
+									<td>
+										<span class="glyphicon glyphicon-education"></span> <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Project.Description }}</a> <span ng-hide="p.Project.IsPublic">(non pubblico)</span>
+										<ul class="list-inline" style="padding-left: 2em;">
+											<li ng-repeat="owner in p.Project.OwnerList"><small><span class="glyphicon glyphicon-user"></span> <a href="#teacher/{{ owner.UserId }}">{{ owner.FirstName + ' ' + owner.LastName }}</a></small></li>
+										</ul>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p><a href="" ng-click="limits['afmax'] = null" ng-if="limits['afmax'] && results.AFList.length > limits['afmax']"><span class="glyphicon glyphicon-plus-sign"></span> Visualizza altri...</a></p>
+	</div>
+</div>
+<div class="alert alert-warning" role="alert" ng-if="!(results.ProjectList.length || results.TeacherList.length || results.CdsList.length || results.AFList.length)">
+	Non è stato trovato nulla in base alle chiavi di ricerca inserite
 </div>
