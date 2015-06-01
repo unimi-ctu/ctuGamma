@@ -8,7 +8,8 @@
  * Controller of the unimiAppApp
  */
 angular.module('unimiAppApp')
-  .controller('CdsCtrl', function ($scope, $http, $routeParams) {
+  .controller('CdsCtrl', function ($scope, $http, $routeParams, unimiService) {
+	  $scope.currentYear = unimiService.currentYear;
 	  $scope.cdsKey = $routeParams.cdsKey;
 	  $scope.selectedOf = null;
 	  
@@ -35,6 +36,6 @@ angular.module('unimiAppApp')
 	  $scope.isActive = true;
 	  $scope.showActive = function(item) {
 		  
-		  return !item || !$scope.isActive || item.Year === '2015';
+		  return !item || !$scope.isActive || item.Year === unimiService.currentYear;
 	  };
   });

@@ -30,7 +30,7 @@
 		<table class="table">
 			<tbody>
 				<tr ng-repeat="cds in cdsType.CdsList | filter:showActive">
-					<td class="col-md-1"><span class="label label-info">{{ cds.Key }}</span> <span ng-if="cds.Year < 2015" class="label label-danger">{{ cds.Year }}</span></td>
+					<td class="col-md-1"><span class="label label-info">{{ cds.Key }}</span> <span ng-if="cds.Year < currentYear" class="label label-danger">{{ cds.Year }}</span></td>
 					<td class="col-md-10">{{ cds.Description }}</td>
 					<td class="col-md-1">
 						<a href="#cds/{{ cds.Key }}/projects"><span class="label label-warning">A</span></a>
