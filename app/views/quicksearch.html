@@ -38,6 +38,7 @@
 		</table>
 		<p><a href="" ng-click="limits['tmax'] = null" ng-if="limits['tmax'] && results.TeacherList.length > limits['tmax']"><span class="glyphicon glyphicon-plus-sign"></span> Visualizza altri...</a></p>
 	</div>
+	
 </div>
 <div ng-if="results.CdsList.length">
 	<div class="clearfix well well-sm">
@@ -48,8 +49,8 @@
 		<table class="table">
 			<tbody>
 				<tr ng-repeat="c in results.CdsList | limitTo: limits['cdsmax']">
-					<td><a href="#cds/{{ c.Key }}{{ c.IsW4 ? '' : '/projects' }}"><span class="label" ng-class="c.IsW4 ? 'label-primary' : 'label-info'">{{ c.Key }}</span></a></td>
-					<td>{{ c.Description }}</td>
+					<td class="col-md-1"><a href="#cds/{{ c.Key }}{{ c.IsW4 ? '' : '/projects' }}"><span class="label" ng-class="c.IsW4 ? 'label-primary' : 'label-info'">{{ c.Key }}</span></a></td>
+					<td class="col-md-11">{{ c.Description }}</td>
 				</tr>
 			</tbody>
 		</table>
