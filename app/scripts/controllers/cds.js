@@ -8,14 +8,14 @@
  * Controller of the unimiAppApp
  */
 angular.module('unimiAppApp')
-  .controller('CdsCtrl', function ($scope, $http, $routeParams, unimiService) {
+  .controller('CdsCtrl', function ($scope, $routeParams, unimiService) {
 	  $scope.currentYear = unimiService.currentYear;
 	  $scope.cdsKey = $routeParams.cdsKey;
 	  $scope.selectedOf = null;
 	  
 	  $scope.loading = true;
 	  
-	  $http.get('http://192.168.15.13/unimiRest/unimi/cds/' + $scope.cdsKey + '/ofs').success(function(data) {
+	  unimiService.getCdsOfs($scope.cdsKey).success(function(data) {
 		$scope.cds = data;
 		
 		if (data.OFList.length === 1) {

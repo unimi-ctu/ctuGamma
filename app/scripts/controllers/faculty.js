@@ -8,11 +8,11 @@
  * Controller of the unimiAppApp
  */
 angular.module('unimiAppApp')
-	.controller('FacultyCtrl', function ($scope, $http, $routeParams, unimiService) {
+	.controller('FacultyCtrl', function ($scope, $routeParams, unimiService) {
 	  $scope.currentYear = unimiService.currentYear;
 	  $scope.isW4 = true;
 	  
-	  $http.get('http://192.168.15.13/unimiRest/unimi/faculty/' + $routeParams.fKey + '/cdses').success(function(data) {
+	  unimiService.getFaculty($routeParams.fKey).success(function(data) {
 		$scope.faculty = data;
 	  });
 	  
