@@ -27,15 +27,20 @@ angular.module('unimiAppApp')
 		$scope.selectedOf = $scope.selectedOf === of.Key ? null : of.Key;
 	  };
 	  
-	  $scope.isAriel = true;
 	  $scope.showAriel = function(item) {
 		  
 		  return !item || !$scope.isAriel || item.ProjectW4List.length;
 	  };
 
-	  $scope.isActive = true;
 	  $scope.showActive = function(item) {
 		  
 		  return !item || !$scope.isActive || item.Year === unimiService.currentYear;
 	  };
+	  
+	  $scope.isActive = unimiService.isOnlyActive;
+  	  $scope.isAriel = unimiService.isOnlyAriel;
+
+  		$scope.$watch(function(scope) { return $scope.isActive}, function(newValue, oldValue) { unimiService.setOnlyActive(newValue);});
+		$scope.$watch(function(scope) { return $scope.isAriel}, function(newValue, oldValue) { unimiService.setOnlyAriel(newValue);});
+
   });

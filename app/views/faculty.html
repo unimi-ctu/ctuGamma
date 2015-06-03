@@ -10,12 +10,12 @@
 		<form>
 			<div class="form-group" style="margin-bottom: 0;">
 				<label>
-					<input type="checkbox" ng-model="isActive"> Visualizza solo Corsi di Studi attivi
+					<input type="checkbox" ng-model="isOnlyActive" ng-click="toggleIsOnlyActive"> Visualizza solo Corsi di Studi attivi
 				</label>
 			</div>
 			<div class="form-group" style="margin-bottom: 0;">
 				<label>
-					<input type="checkbox" ng-model="isW4"> W4 mode
+					<input type="checkbox" ng-model="isW4Mode"> W4 mode
 				</label>
 			</div>
 		</form>
@@ -27,7 +27,7 @@
 <ul class="list-unstyled">
 	<li ng-repeat="cdsType in faculty.CdsTypeList | filter:onlyw4">
 		<div class="well well-sm"><span class="label label-info" ng-hide="cdsType.CdsType.Key === 'NOCLASS'">{{ cdsType.CdsType.Key }}</span> <strong>{{ cdsType.CdsType.Description }}</strong></div>
-		<table class="table">
+		<table class="table" style="margin-left: 2em;">
 			<tbody>
 				<tr ng-repeat="cds in cdsType.CdsList | filter:showActive">
 					<td class="col-md-1"><span class="label label-info">{{ cds.Key }}</span> <span ng-if="cds.Year < currentYear" class="label label-danger">{{ cds.Year }}</span></td>
