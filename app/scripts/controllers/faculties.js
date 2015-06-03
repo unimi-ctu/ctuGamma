@@ -9,7 +9,7 @@
  */
 angular.module('unimiAppApp')
   .controller('FacultiesCtrl', function ($scope, unimiService) {
-	  unimiService.getFaculties.success(function(data) {
+	  unimiService.getFaculties().success(function(data) {
 		  $scope.faculties = data;
 	  });
   });
