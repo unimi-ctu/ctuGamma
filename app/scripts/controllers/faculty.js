@@ -8,21 +8,25 @@
  * Controller of the unimiAppApp
  */
 angular.module('unimiAppApp')
-	.controller('FacultyCtrl', function ($scope, $http, $routeParams, unimiService) {
-	  $scope.currentYear = unimiService.currentYear;
-	  $scope.isW4 = true;
+	.controller('FacultyCtrl', function ($scope, $routeParams, unimiService) {
+	    $scope.currentYear = unimiService.currentYear;
 	  
-	  $http.get('http://192.168.15.13/unimiRest/unimi/faculty/' + $routeParams.fKey + '/cdses').success(function(data) {
-		$scope.faculty = data;
-	  });
+	    unimiService.getFaculty($routeParams.fKey).success(function(data) {
+			$scope.faculty = data;
+	    });
 	  
 		$scope.onlyw4 = function(item) {
-			return !$scope.isW4 || (item.CdsType && item.CdsType.Key !== 'NOCLASS');
+			return !$scope.isW4Mode || (item.CdsType && item.CdsType.Key !== 'NOCLASS');
 		};
 		
-		$scope.isActive = true;
+		$scope.isOnlyActive = unimiService.isOnlyActive;
+	    $scope.isW4Mode = unimiService.isW4Mode;
+		
 		$scope.showActive = function(item) {
-			return !item || !$scope.isActive || item.Year === unimiService.currentYear;
+			return !item || !$scope.isOnlyActive || item.Year === unimiService.currentYear;
 		};
+
+		$scope.$watch(function(scope) { return $scope.isOnlyActive}, function(newValue, oldValue) { unimiService.setOnlyActive(newValue);});
+		$scope.$watch(function(scope) { return $scope.isW4Mode}, function(newValue, oldValue) { unimiService.setW4Mode(newValue);});
 
 	});

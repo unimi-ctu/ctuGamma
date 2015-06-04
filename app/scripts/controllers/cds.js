@@ -8,14 +8,14 @@
  * Controller of the unimiAppApp
  */
 angular.module('unimiAppApp')
-  .controller('CdsCtrl', function ($scope, $http, $routeParams, unimiService) {
+  .controller('CdsCtrl', function ($scope, $routeParams, unimiService) {
 	  $scope.currentYear = unimiService.currentYear;
 	  $scope.cdsKey = $routeParams.cdsKey;
 	  $scope.selectedOf = null;
 	  
 	  $scope.loading = true;
 	  
-	  $http.get('http://192.168.15.13/unimiRest/unimi/cds/' + $scope.cdsKey + '/ofs').success(function(data) {
+	  unimiService.getCdsOfs($scope.cdsKey).success(function(data) {
 		$scope.cds = data;
 		
 		if (data.OFList.length === 1) {
@@ -27,15 +27,20 @@ angular.module('unimiAppApp')
 		$scope.selectedOf = $scope.selectedOf === of.Key ? null : of.Key;
 	  };
 	  
-	  $scope.isAriel = true;
 	  $scope.showAriel = function(item) {
 		  
 		  return !item || !$scope.isAriel || item.ProjectW4List.length;
 	  };
 
-	  $scope.isActive = true;
 	  $scope.showActive = function(item) {
 		  
 		  return !item || !$scope.isActive || item.Year === unimiService.currentYear;
 	  };
+	  
+	  $scope.isActive = unimiService.isOnlyActive;
+  	  $scope.isAriel = unimiService.isOnlyAriel;
+
+  		$scope.$watch(function(scope) { return $scope.isActive}, function(newValue, oldValue) { unimiService.setOnlyActive(newValue);});
+		$scope.$watch(function(scope) { return $scope.isAriel}, function(newValue, oldValue) { unimiService.setOnlyAriel(newValue);});
+
   });

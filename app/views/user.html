@@ -29,9 +29,9 @@
 <hr>
 <div class="alert alert-info" role="alert" ng-show="loading"><span class="glyphicon glyphicon-refresh glyphicon-spin"></span> Carico i dati...</div>
 <div ng-show="mode === 'w4' && !loading">
-	<div ng-hide="of">
+	<p ng-hide="of">
 		nessuna offerta formativa selezionata
-	</div>
+	</p>
 	<div ng-show="of">
 		<div class="well well.xs">
 			<p><span class="label label-info">{{ of.Cds.Faculty.Key }}</span> <a href="#faculty/{{ of.Cds.Faculty.Key }}">{{ of.Cds.Faculty.Description }}</a></p>
@@ -43,18 +43,27 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="col-md-1">Codice W4</th>
+					<th class="col-md-1"><span class="pull-right">Codice W4</span></th>
 					<th class="col-md-11">Insegnamento</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="af in of.AFList">
-					<td class="col-md-1"><span class="label label-info">{{ af.Key }}</span></td>
+				<tr ng-repeat="af in of.AFList | orderBy: 'Description'">
+					<td class="col-md-1"><p><span class="label label-info pull-right">{{ af.Key }}</span></p></td>
 					<td class="col-md-11">
-						{{ af.Description }}
-						<ul class="list-unstyled">
-							<li ng-repeat="p in af.ProjectW4List"><span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.Project.IsPublic">non pubblico</span>  <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Project.Description }}</a> <span ng-hide="p.Project.IsPublic">(non pubblico)</span></li>
-						</ul>
+						<p>{{ af.Description }}</p>
+						<table class="table" style="margin-left: 2em;">
+							<tbody>
+								<tr ng-repeat="p in af.ProjectW4List">
+									<td>
+										<p><span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.Project.IsPublic">non pubblico</span>  <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Project.Description }}</a> <span ng-hide="p.Project.IsPublic">(non pubblico)</span></p>
+										<ul class="list-inline" style="padding-left: 2em;">
+											<li ng-repeat="owner in p.Project.OwnerList"><small><span class="glyphicon glyphicon-user"></span> <a href="#teacher/{{ owner.UserId }}">{{ owner.FirstName + ' ' + owner.LastName }}</a></small></li>
+										</ul>				
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</td>
 				</tr>
 			</tbody>
@@ -62,9 +71,9 @@
 	</div>
 </div>
 <div ng-show="mode === 'cds' && !loading">
-	<div ng-hide="cds">
+	<p ng-hide="cds">
 		nessun cds selezionato
-	</div>
+	</p>
 	<div ng-show="cds">
 		<div class="well well.xs">
 			<p><span class="label label-info">{{ cds.Cds.Faculty.Key }}</span> <a href="#faculty/{{ cds.Cds.Faculty.Key }}">{{ cds.Cds.Faculty.Description }}</a></p>
@@ -75,11 +84,14 @@
 			<tbody>
 				<tr ng-repeat="p in cds.ProjectList">
 					<td class="col-md-9">
-						 <span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.IsPublic">non pubblico</span> <a href="http://{{ p.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Description }}</a>
+						<p><span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.IsPublic">non pubblico</span> <a href="http://{{ p.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Description }}</a></p>
+						<ul class="list-inline" style="padding-left: 2em;">
+							<li ng-repeat="owner in p.OwnerList"><small><span class="glyphicon glyphicon-user"></span> <a href="#teacher/{{ owner.UserId }}">{{ owner.FirstName + ' ' + owner.LastName }}</a></small></li>
+						</ul>				
 					</td>
 					<td class="col-md-3">
 						<ul class="list-inline">
-							<li ng-repeat="cds in p.CdsList"><span class="label label-info">{{ cds.Key }}</span></li>
+							<li ng-repeat="cds in p.CdsList"><a ng-href="#cds/{{ ::cds.Key }}{{ ::cds.IsW4 ? '' : '/projects' }}"><span class="label" ng-class="cds.IsW4 ? 'label-primary' : 'label-info'" ng-bind="cds.Key"></span></a></li>
 						</ul>
 					</td>
 				</tr>

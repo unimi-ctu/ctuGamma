@@ -11,7 +11,7 @@
 			<tbody>
 				<tr ng-repeat="p in results.ProjectList | limitTo: limits['pmax']">
 					<td>
-						<span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.IsPublic">non pubblico</span> <a href="http://{{ p.Project.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Description }}</a>
+						<span class="glyphicon glyphicon-education"></span> <span class="label label-danger" ng-show="!p.IsPublic">non pubblico</span> <a href="http://{{ ::p.Url }}.ariel.ctu.unimi.it" target="_blank">{{ p.Description }}</a>
 						<ul class="list-inline" style="padding-left: 2em;">
 							<li ng-repeat="owner in p.OwnerList"><small><span class="glyphicon glyphicon-user"></span> <a href="#teacher/{{ owner.UserId }}">{{ owner.FirstName + ' ' + owner.LastName }}</a></small></li>
 						</ul>				
@@ -49,7 +49,7 @@
 		<table class="table">
 			<tbody>
 				<tr ng-repeat="c in results.CdsList | limitTo: limits['cdsmax']">
-					<td class="col-md-1"><a href="#cds/{{ c.Key }}{{ c.IsW4 ? '' : '/projects' }}"><span class="label" ng-class="c.IsW4 ? 'label-primary' : 'label-info'">{{ c.Key }}</span></a></td>
+					<td class="col-md-1"><a class="pull-right" href="#cds/{{ c.Key }}{{ c.IsW4 ? '' : '/projects' }}"><span class="label" ng-class="c.IsW4 ? 'label-primary' : 'label-info'">{{ c.Key }}</span></a></td>
 					<td class="col-md-11">{{ c.Description }}</td>
 				</tr>
 			</tbody>
@@ -66,8 +66,8 @@
 		<table class="table">
 			<tbody>
 				<tr ng-repeat="af in results.AFList | limitTo: limits['afmax']">
-					<td><span class="label" ng-class="af.IsW4 ? 'label-primary' : 'label-info'">{{ af.Key }}</span></a></td>
-					<td>
+					<td class="col-md-1"><span class="label pull-right" ng-class="af.IsW4 ? 'label-primary' : 'label-info'">{{ af.Key }}</span></a></td>
+					<td class="col-md-11">
 						<p>{{ af.Description }}</p>
 						<table class="table" ng-show="af.ProjectW4List.length" style="margin-bottom: 0;">
 							<tbody>
