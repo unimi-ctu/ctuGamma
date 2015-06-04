@@ -52,7 +52,7 @@ angular
         controller: 'TeacherCtrl'
       })
       .when('/cds/:cdsKey/projects', {
-        templateUrl: 'views/cdsprojects2.html',
+        templateUrl: 'views/cdsprojects.html',
         controller: 'CdsprojectsCtrl'
       })
       .when('/teachers', {

@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
-  <li><a href="#faculties">Facoltà</a></li>
-  <li class="active">Elenco Cds</li> 
+  <li><a href="#faculties">Elenco Facoltà</a></li>
+  <li class="active">{{ faculty.Faculty.Description }}</li> 
 </ol>
 <h3><span class="label label-info">{{ faculty.Faculty.Key }}</span> {{ faculty.Faculty.Description }}</h3>
 <p>In questa pagina sono elencati i Cds afferenti alla facoltà selezionata</p>
@@ -27,10 +27,10 @@
 <ul class="list-unstyled">
 	<li ng-repeat="cdsType in faculty.CdsTypeList | filter:onlyw4">
 		<div class="well well-sm"><span class="label label-info" ng-hide="cdsType.CdsType.Key === 'NOCLASS'">{{ cdsType.CdsType.Key }}</span> <strong>{{ cdsType.CdsType.Description }}</strong></div>
-		<table class="table" style="margin-left: 2em;">
+		<table class="table">
 			<tbody>
 				<tr ng-repeat="cds in cdsType.CdsList | filter:showActive">
-					<td class="col-md-1"><span class="label label-info">{{ cds.Key }}</span> <span ng-if="cds.Year < currentYear" class="label label-danger">{{ cds.Year }}</span></td>
+					<td class="col-md-1"><span ng-if="cds.Year < currentYear" class="label label-danger">{{ cds.Year }}</span> <span class="pull-right"><span class="label label-info">{{ cds.Key }}</span></span></td>
 					<td class="col-md-10">{{ cds.Description }}</td>
 					<td class="col-md-1">
 						<a href="#cds/{{ cds.Key }}/projects"><span class="label label-warning">A</span></a>
