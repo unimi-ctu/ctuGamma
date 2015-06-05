@@ -17,7 +17,13 @@ angular
     'ngSanitize',
 	'infinite-scroll'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $httpProvider) {
+    // ATTENZIONE: senza questa riga di configurazione 
+    // non vengono inviati i cookie con le richieste $http
+    // http://stackoverflow.com/questions/17064791/http-doesnt-send-cookie-in-requests
+    $httpProvider.defaults.withCredentials = true;
+	$httpProvider.interceptors.push('authfilter');
+	
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -67,7 +73,11 @@ angular
         redirectTo: '/'
       });
   })
-  .run(function($rootScope, $location) {
+  .run(function($rootScope, $location, unimiService) {
+	  unimiService.getLoggedUser().success(function(data) {
+		console.log(data);
+		$rootScope.user = data;
+	  });
 	  $rootScope.goSearch = function() {
 		  var keywords = $rootScope.keywords || '';
 		  keywords = keywords.trim();

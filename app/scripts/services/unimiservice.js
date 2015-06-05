@@ -8,10 +8,24 @@
  * Service in the unimiAppApp.
  */
 angular.module('unimiAppApp')
+  .factory('authfilter', function($q, $window, $location) {
+	  return {
+		  response: function(response) {
+			console.log(response.headers('X-Nouser'));
+			return response;
+		  },
+		  responseError: function(response) {
+			if (response.status === 401) {
+				$window.location.href = 'https://www.elearning.unimi.it/authentication/portal/login.aspx?c=true&url=' + $location.absUrl();
+			}
+			return $q.reject(response);
+		  }
+	  };
+  })
   .service('unimiService', function ($http) {
     var that = this;
 	
-	this.restUrl = 'http://192.168.15.13/unimiRest/unimi/';
+	this.restUrl = 'http://ale.unimi.it/unimiRest/unimi/';
 	this.currentYear = '2015';
 	
 	this.isOnlyActive = true;
@@ -48,6 +62,10 @@ angular.module('unimiAppApp')
 		saveState();
 	};
 	
+	this.getLoggedUser = function(keywords) {
+		return $http.get(that.restUrl + 'loggeduser');
+	};
+
 	this.getFaculties = function() {
 		return $http.get(that.restUrl + 'faculties');
 	};
